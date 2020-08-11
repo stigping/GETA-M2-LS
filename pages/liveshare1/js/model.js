@@ -1,5 +1,6 @@
 let contentDiv = document.getElementById('mainContent');
 
+
 const model = {
     app: {
         currentPoll: 1,
@@ -31,7 +32,6 @@ const model = {
         }
     }, ]
 };
-
 /*
     Hvilke andre måter kunne vi lagret stemmene på?
         - Hva er best for å legge til nye stemmer?
