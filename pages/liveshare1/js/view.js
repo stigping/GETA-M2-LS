@@ -1,32 +1,36 @@
-function showA()
+function createPoll()
 {
+    const pageInputs = model.inputs.createPoll;
+    const newText = model.inputs.createPoll.newAlternative=this.value;
     contentDiv.innerHTML = ` 
     <div>Spørsmål</div>
-    <input id='textInput' placeholder='Skriv inn spørsmål...' value='${model.inputs.createPoll.question}'></input>
+    <input id='textInput' placeholder='Skriv inn spørsmål...' value='${pageInputs.question}' oninput='model.inputs.createPoll.question=this.value'></input>
     <br><br>
     <input type='checkbox' id='cBox'></input>
     <p>La brukerene legge til egne alternativer</p>
-    <ul>
-
+    <ul id="list">
+    
     </ul>
-    <input placeholder='Skriv inn alternativ...' value='${model.inputs.createPoll.newAlternative}'></input>
-    <button onlick="">Legg til alternativ</button>
+    <input placeholder='Skriv inn alternativ...' value='' oninput='model.inputs.createPoll.newAlternative=this.value'></input>
+    <button onclick='addAlternative(model.inputs.createPoll.newAlternative)' onclick='${newText}'>Legg til alternativ</button>
     <br><br>
-    <button onclick="">Lag</button>
+    <button onclick=''>Lag</button>
     `;
 }
 
-function showB()
+function showPoll()
 {  
+    const pageInputs = model.inputs.createPoll;
     contentDiv.innerHTML = `
     <div>${model.polls[0].question}</div>
     <br>
+    ${createAlternativesHtml2()}
     <div id='buttons'></div>
-    <input placeholder='Skriv inn alternativ...' value='${model.inputs.createPoll.newAlternative}'></input>
+    <input placeholder='Skriv inn alternativ...' value='${pageInputs.newAlternative}'></input>
     <button onlick="">Legg til alternativ</button>
     `;
-    for (i = 0; i < model.polls[0].options.length; i++)
-    {
-        document.getElementById('buttons').innerHTML += `<button>${model.polls[0].options[i]}</button> <br><br>`
-    }
+    // createAlternativesHtml()
+
 }
+
+// oninput='model.inputs.createPoll.newAlternative=this.value'

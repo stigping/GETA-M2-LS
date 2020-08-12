@@ -1,6 +1,5 @@
 let contentDiv = document.getElementById('mainContent');
 
-
 const model = {
     app: {
         currentPoll: 1,
@@ -14,8 +13,11 @@ const model = {
     ],
     inputs: {
         createPoll: {
+            pollId: 1,
             newAlternative: '',
-            question: '',
+            question: 'Hvem er den tøffeste læreren ved GET Academy?',
+            options: ['Geir', 'Eskil', 'Terje'],
+            usersCanAddAlternatives: true,
         },
     },
     polls: [{
@@ -32,11 +34,11 @@ const model = {
         }
     }, ]
 };
+
 /*
     Hvilke andre måter kunne vi lagret stemmene på?
         - Hva er best for å legge til nye stemmer?
         - Hva er best for å endre stemmer?
         - Hva er best for å telle opp stemmer?
-
     Hvordan ville det blitt om hvert alternativ var et objekt, med en id?
 */
