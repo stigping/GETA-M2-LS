@@ -4,7 +4,7 @@ const model = {
     app: {
         currentPoll: 1,
         loggedInUser: 'per',
-        currentPage: 'createVote',
+        currentPage: 'createPoll',
     },
     users: [
         { username: 'per', name: 'Per', password: '123' },
@@ -21,7 +21,7 @@ const model = {
         },
     },
     polls: [{
-        id: 1,
+        id: 0,
         createdBy: 'espen',
         isOpen: true,
         usersCanAddAlternatives: true,

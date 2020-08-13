@@ -11,13 +11,33 @@
 </head>
 
 <body>
+    <div>
+    Meny:
+        <a href="javascript:changePage('createPoll')">Lag poll</a>
+        <a href="javascript:changePage('showPoll')">Stem</a>
+        <a href="javascript:changePage('showAllPolls')">Vis lagrede polls </a>
+    </div>
     <div id="mainContent"></div>
-    
+
     <script src="js/model.js"></script>
-    <script src="js/controller.js"></script>
     <script src="js/view.js"></script>
+    <script src="js/controller.js"></script>
+    
     <script>
-        createPoll()
+        updateView();
+
+        function updateView() {
+            const page = model.app.currentPage;
+            if (page === 'createPoll') createPoll();
+            else if (page === 'showPoll') showPoll();
+            else if (page === 'showAllPolls') showAllPolls();
+        }
+
+        function changePage(page) {
+            model.app.currentPage = page;
+            updateView();
+        }
+
     </script>
 </body>
 
