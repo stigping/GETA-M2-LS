@@ -5,17 +5,33 @@ function addAlternative(text)
     createPoll()
 }
 
-function removeAlternative() 
+function removeAlternative(id)
 {
+    model.inputs.createPoll.options.splice(id, 1)
+    document.getElementById(id).innerHTML = '';
+    createPoll()
+}
 
+function checkUsersAdd()
+{
+model.inputs.createPoll.usersCanAddAlternatives == true ? model.inputs.createPoll.usersCanAddAlternatives = false : model.inputs.createPoll.usersCanAddAlternatives = true;
+}
+
+function updatePoll()
+{
+    model.polls[0].options = model.inputs.createPoll.options;
+    model.polls[0].usersCanAddAlternatives = model.inputs.createPoll.usersCanAddAlternatives;
+    showPoll()
 }
 
 function showOptionsInCreate() 
 {
     let html = '';
+    let i = 0;
     for (option of model.inputs.createPoll.options) 
     {
-        html += `<li>${option}</li> <br>`
+        html += `<li id="${i}">${option} <button class="far fa-times-circle" onclick="removeAlternative(${i})"></button></li> <br>`
+        i++
     }
     return html
 }
@@ -41,7 +57,7 @@ function createAlternativesHtml()
 function createAlternativesHtml2() 
 {
     const pageInputs = model.polls[model.polls[0].id].options;
-    return pageInputs.map(option => `<li>${option}</li>`).join('');
+    return pageInputs.map(option => `<button>${option}</button>`).join('');
 }
 
 function showStoredPolls() 
