@@ -1,76 +1,118 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>Home</title>
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script
+			src="https://kit.fontawesome.com/1e3bbfe500.js"
+			crossorigin="anonymous"
+		></script>
+	</head>
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Home</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="https://kit.fontawesome.com/1e3bbfe500.js" crossorigin="anonymous"></script>
-</head>
+	<body>
+		<hr class="hrTop" />
+		<div>
+			Meny:
+			<button>
+				<a href="javascript:changePage('createPoll')">Lag poll</a>
+			</button>
+			<button><a href="javascript:changePage('showPoll')">Stem</a></button>
+			<button>
+				<a href="javascript:changePage('showAllPolls')">Vis lagrede polls</a>
+			</button>
+		</div>
+		<hr />
+        <div id="mainContent"></div>
 
-<body>
-    <hr class="hrTop">
-    <div>
-    Meny:
-        <button><a href="javascript:changePage('createPoll')">Lag poll</a></button>
-        <button><a href="javascript:changePage('showPoll')">Stem</a></button>
-        <button><a href="javascript:changePage('showAllPolls')">Vis lagrede polls</a></button>
-    </div>
-    <hr>
-    <div id="mainContent"></div>
+        <hr>
 
+        <h2>Firebase testing:</h2>
 
-    <div class="footer">
-        <ul>
-            <a href="#" class="footer-text">Home</a>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="#" class="footer-text">Unit Test</a>
-        </ul>
-    </div>
+        <div>
+            <input type="text" onkeydown="if(event.keyCode==13) add(this);">
+        </div>
 
-    <script src="js/model.js"></script>
-    <script src="js/view.js"></script>
-    <script src="js/controller.js"></script>
-    
-    <script>
-        updateView();
+        <div id="model">Loading...</div>
 
-        function updateView() {
-            const page = model.app.currentPage;
-            if (page === 'createPoll') createPoll();
-            else if (page === 'showPoll') showPoll();
-            else if (page === 'showAllPolls') showAllPolls();
-        }
+		<div class="footer">
+			<ul>
+				<a href="#" class="footer-text">Home</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="#" class="footer-text">Unit Test</a>
+			</ul>
+		</div>
 
-        function changePage(page) {
-            model.app.currentPage = page;
-            updateView();
-        }
+		<script src="js/model.js"></script>
+		<script src="js/view.js"></script>
+		<script src="js/controller.js"></script>
 
-    </script>
+		<script>
+			updateView();
 
-<!-- Firebase Start -->
-<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
-<script>
-  var firebaseConfig = {
-    apiKey: "AIzaSyCXy52eg5OMTDAOnsF35QhaaYdCMwkvHNc",
-    authDomain: "geta-m2-ls-1.firebaseapp.com",
-    databaseURL: "https://geta-m2-ls-1.firebaseio.com",
-    projectId: "geta-m2-ls-1",
-    storageBucket: "geta-m2-ls-1.appspot.com",
-    messagingSenderId: "129582213568",
-    appId: "1:129582213568:web:0d0bb195dfa73141d28025",
-    measurementId: "G-0SWWM4EPZK"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
-<!-- Firebase End -->
-</body>
+			function updateView() {
+				const page = model.app.currentPage;
+				if (page === "createPoll") createPoll();
+				else if (page === "showPoll") showPoll();
+				else if (page === "showAllPolls") showAllPolls();
+			}
 
+			function changePage(page) {
+				model.app.currentPage = page;
+				updateView();
+			}
+		</script>
+
+		<!-- Firebase Start -->
+		<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-firestore.js"></script>
+		<script>
+			var firebaseConfig = {
+				apiKey: "AIzaSyCXy52eg5OMTDAOnsF35QhaaYdCMwkvHNc",
+				authDomain: "geta-m2-ls-1.firebaseapp.com",
+				databaseURL: "https://geta-m2-ls-1.firebaseio.com",
+				projectId: "geta-m2-ls-1",
+				storageBucket: "geta-m2-ls-1.appspot.com",
+				messagingSenderId: "129582213568",
+				appId: "1:129582213568:web:0d0bb195dfa73141d28025",
+				measurementId: "G-0SWWM4EPZK",
+			};
+			// Initialize Firebase
+			firebase.initializeApp(firebaseConfig);
+			firebase.analytics();
+			var db = firebase.firestore();
+
+			var modelCollection = db.collection('model')
+			//modelCollection.get().then(
+                modelCollection.onSnapshot(
+                function (collectionSnapshot)
+                {
+                    let html = '<ul>';
+                    collectionSnapshot.forEach(
+                        function (modelSnapshot)
+                        {
+                            let model = modelSnapshot.data();
+                            html += '<li>' + createPoll.options + '</li>';
+                            // console.log(modelSnapshot.data());
+                            console.log(createPoll.options);
+                        });
+                        html += '</ul>';
+                        document.getElementById('model').innerHTML = html;
+                });
+                
+                function add(inputTag)
+                {
+                    let model =
+                    {
+                        options: inputTag.value
+                    };
+                    modelCollection.add(createPoll.options);
+                }
+		</script>
+		<!-- Firebase End -->
+	</body>
 </html>
